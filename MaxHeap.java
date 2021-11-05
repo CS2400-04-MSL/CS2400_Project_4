@@ -134,8 +134,17 @@ public final class MaxHeap<T extends Comparable<? super T>>
       } // end for
    } // end heapSort
 
+   //Build Max Heap
+   public static <T extends Comparable<? super T>>
+   void buildMaxHeap_optimal(T ar[])
+   {
+      int startIndex = ar.length / 2 - 1;
+      for (int i = startIndex; i >= 0; i--)
+         reheap(ar, ar.length, i);
+   }
+
    // Private methods
-// . . .
+   // . . .
    private void reheap(int rootIndex)
    {
       boolean done = false;
