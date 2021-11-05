@@ -35,6 +35,7 @@ public final class MaxHeap<T extends Comparable<? super T>>
       lastIndex = 0;
       integrityOK = true;
    } // end constructor
+
    /** @author Frank M. Carrano, Timothy M. Henry
     @version 5.0 */
 
@@ -123,17 +124,17 @@ public final class MaxHeap<T extends Comparable<? super T>>
    {
       // Create first heap
       for (int rootIndex = n / 2 - 1; rootIndex >= 0; rootIndex--)
-      reheap(array, rootIndex, n - 1);
-
+         reheap(array, rootIndex, n - 1);
       swap(array, 0, n - 1);
 
       for (int lastIndex = n - 2; lastIndex > 0; lastIndex--)
       {
-      reheap(array, 0, lastIndex);
-      swap(array, 0, lastIndex);
+         reheap(array, 0, lastIndex);
+         swap(array, 0, lastIndex);
       } // end for
    } // end heapSort
-// Private methods
+
+   // Private methods
 // . . .
    private void reheap(int rootIndex)
    {
@@ -196,5 +197,36 @@ public final class MaxHeap<T extends Comparable<? super T>>
       heap[rootIndex] = orphan;
    } // end reheap
 
+   private static <T extends Comparable<? super T>>void swap(T[] array, int i, int lastIndex2) 
+   {
+      T temp = array[lastIndex2];
+      array[lastIndex2] = array[i];
+      array[i] = temp;
+   }
 
+   private void checkCapacity(int initialCapacity) 
+   {
+      /*
+      if (initialCapacity < DEFAULT_CAPACITY)
+         initialCapacity = DEFAULT_CAPACITY;
+      else*/ 
+      if (initialCapacity > MAX_CAPACITY)
+         throw new IllegalStateException("Cannot create a heap with capacity larger than " + MAX_CAPACITY);
+   }
+
+   private void ensureCapacity() 
+   {
+      if (lastIndex >= heap.length)
+      {
+         int cap = heap.length * 2;
+         checkCapacity(cap);
+         heap = Arrays.copyOf(heap, cap);
+      }
+   }
+
+   private void checkIntegrity() 
+   {
+      if (!integrityOK)
+         throw new SecurityException("MaxHeap integrity not ok");
+   }
 } // end MaxHeap
