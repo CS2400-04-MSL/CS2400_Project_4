@@ -55,12 +55,35 @@ public final class MaxHeap<T extends Comparable<? super T>>
 
    public void add(T newEntry)
    {
-   // See Segment 27.8.
+      checkIntegrity();        // Ensure initialization of data fields
+      int newIndex = lastIndex + 1;
+      int parentIndex = newIndex / 2;
+      while ( (parentIndex > 0) && newEntry.compareTo(heap[parentIndex]) > 0)
+      {
+         heap[newIndex] = heap[parentIndex];
+         newIndex = parentIndex;
+         parentIndex = newIndex / 2;
+      } // end while
+
+      heap[newIndex] = newEntry;
+      lastIndex++;
+      ensureCapacity();
    } // end add
 
    public T removeMax()
    {
-   // See Segment 27.12. 
+      checkIntegrity();             // Ensure initialization of data fields
+      T root = null;
+
+      if (!isEmpty())
+      {
+         root = heap[1];            // Return value
+         heap[1] = heap[lastIndex]; // Form a semiheap
+         lastIndex--;               // Decrease size
+         reheap(1);                 // Transform to a heap
+      } // end if
+
+      return root;
    } // end removeMax
 
    public T getMax()
@@ -93,6 +116,85 @@ public final class MaxHeap<T extends Comparable<? super T>>
       lastIndex = 0;
    } // end clear
    
+   /** @author Frank M. Carrano, Timothy M. Henry
+       @version 5.0 */
+   public static <T extends Comparable<? super T>>
+   void heapSort(T[] array, int n)
+   {
+      // Create first heap
+      for (int rootIndex = n / 2 - 1; rootIndex >= 0; rootIndex--)
+      reheap(array, rootIndex, n - 1);
+
+      swap(array, 0, n - 1);
+
+      for (int lastIndex = n - 2; lastIndex > 0; lastIndex--)
+      {
+      reheap(array, 0, lastIndex);
+      swap(array, 0, lastIndex);
+      } // end for
+   } // end heapSort
 // Private methods
 // . . .
+   private void reheap(int rootIndex)
+   {
+      boolean done = false;
+      T orphan = heap[rootIndex];
+      int leftChildIndex = 2 * rootIndex;
+
+      while (!done && (leftChildIndex <= lastIndex) )
+      {
+         int largerChildIndex = leftChildIndex; // Assume larger
+         int rightChildIndex = leftChildIndex + 1;
+
+         if ( (rightChildIndex <= lastIndex) &&
+               heap[rightChildIndex].compareTo(heap[largerChildIndex]) > 0)
+         {
+            largerChildIndex = rightChildIndex;
+         } // end if
+
+         if (orphan.compareTo(heap[largerChildIndex]) < 0)
+         {
+            heap[rootIndex] = heap[largerChildIndex];
+            rootIndex = largerChildIndex;
+            leftChildIndex = 2 * rootIndex;
+         }
+         else
+            done = true;
+      } // end while
+
+      heap[rootIndex] = orphan;
+   } // end reheap
+
+   private static <T extends Comparable<? super T>>
+        void reheap(T[] heap, int rootIndex, int lastIndex)
+   {
+      boolean done = false;
+      T orphan = heap[rootIndex];
+      int leftChildIndex = 2 * rootIndex + 1;
+
+      while (!done && (leftChildIndex <= lastIndex))
+      {
+         int largerChildIndex = leftChildIndex;
+         int rightChildIndex = leftChildIndex + 1;
+
+         if ( (rightChildIndex <= lastIndex) &&
+               heap[rightChildIndex].compareTo(heap[largerChildIndex]) > 0)
+         {
+            largerChildIndex = rightChildIndex;
+         } // end if
+
+         if (orphan.compareTo(heap[largerChildIndex]) < 0)
+         {
+            heap[rootIndex] = heap[largerChildIndex];
+            rootIndex = largerChildIndex;
+            leftChildIndex = 2 * rootIndex + 1;
+         }
+         else
+            done = true;
+      } // end while
+
+      heap[rootIndex] = orphan;
+   } // end reheap
+
+
 } // end MaxHeap
