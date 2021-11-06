@@ -140,7 +140,7 @@ public final class MaxHeap<T extends Comparable<? super T>>
    {
       int startIndex = ar.length / 2 - 1;
       for (int i = startIndex; i >= 0; i--)
-         reheap(ar, ar.length, i);
+         reheap(ar, ar.length - 1, i);
    }
 
    // Private methods
