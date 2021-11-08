@@ -23,7 +23,7 @@ public class MaxHeapFileTester {
 
 		arrayOpt = Arrays.copyOf(arraySeq,arraySeq.length);
 
-
+		MaxHeap heapSeq = new MaxHeap(arraySeq);
 		int swapsSequential = MaxHeap.buildMaxHeap_sequential(arraySeq);
 
 		//optimal method
@@ -40,7 +40,7 @@ public class MaxHeapFileTester {
 
 			// sequential printing
 			//i = 0;
-			MaxHeap heapSeq = new MaxHeap(arraySeq);
+
 
 			writer.write("Sequential Method: \n\n");
 
@@ -50,7 +50,7 @@ public class MaxHeapFileTester {
 				writer.write( (j + 1) + ": " + arraySeq[j] + "\n"); //write first 10 ints to output
 				heapSeq.removeMax(); //perform 10 removals
 			}
-			writer.write("Number of swaps: " + swapsSequential + "\n\n");
+			writer.write("\nNumber of swaps: " + swapsSequential + "\n\n");
 
 
 			for (int j = 0; j < 10; j++)
@@ -65,7 +65,7 @@ public class MaxHeapFileTester {
 			//i = 0;
 			MaxHeap heapOpt = new MaxHeap(arrayOpt);
 
-			writer.write("\n\nOptimal Method: \n\n");
+			writer.write("\n----------------------------\nOptimal Method: \n\n");
 
 			for (int j = 0; j < 10; j++)
 			{
@@ -73,7 +73,7 @@ public class MaxHeapFileTester {
 				writer.write( (j + 1) + ": " + arrayOpt[j] + "\n"); //write first 10 ints to output
 				heapOpt.removeMax(); //perform 10 removals
 			}
-			writer.write("Number of swaps: " + swapsOptimal + "\n\n");
+			writer.write("\nNumber of swaps: " + swapsOptimal + "\n\n");
 
 
 			for (int j = 0; j < 10; j++)

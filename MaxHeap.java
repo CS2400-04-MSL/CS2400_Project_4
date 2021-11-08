@@ -157,12 +157,15 @@ public final class MaxHeap<T extends Comparable<? super T>> implements MaxHeapIn
    public static <T extends Comparable<? super T>>
    int buildMaxHeap_sequential(T inputArray[])
    {
-      MaxHeap heap = new MaxHeap(inputArray.length);
+      MaxHeap heapSeq = new MaxHeap(inputArray.length);
 
       swapCount = 0;
 
       for (int i = 0; i < inputArray.length; i++)
-         heap.add(inputArray[i]);
+         heapSeq.add(inputArray[i]);
+
+      for (int j = 0; j <inputArray.length; j++)
+         inputArray[j] = (T) heapSeq.heap[j+1];
 
       return swapCount;
    }
@@ -263,4 +266,6 @@ public final class MaxHeap<T extends Comparable<? super T>> implements MaxHeapIn
       if (!integrityOK)
          throw new SecurityException("MaxHeap integrity not ok");
    }
+
+
 } // end MaxHeap
