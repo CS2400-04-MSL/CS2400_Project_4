@@ -36,7 +36,7 @@ public class MaxHeapFileTester {
 		Comparable[] sortedOptimal = new String[100];
 		Comparable[] sortedSequential = new String[100];
 		try {
-			FileWriter writer = new FileWriter("data_sorted.txt");
+			FileWriter writer = new FileWriter("output.txt");
 
 			// sequential printing
 			//i = 0;
