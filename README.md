@@ -7,4 +7,4 @@ Leonard Woo -
 
 Steven Watson - 
 
-[video](https://www.zombo.com/)
+[video]()
