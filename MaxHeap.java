@@ -14,6 +14,7 @@ public final class MaxHeap<T extends Comparable<? super T>>
    private boolean integrityOK = false;
 	private static final int DEFAULT_CAPACITY = 25;
 	private static final int MAX_CAPACITY = 10000;
+   private static int swapCount = 0;
    
    public MaxHeap()
    {
@@ -136,11 +137,15 @@ public final class MaxHeap<T extends Comparable<? super T>>
 
    //Build Max Heap
    public static <T extends Comparable<? super T>>
-   void buildMaxHeap_optimal(T ar[])
+   int buildMaxHeap_optimal(T ar[])
    {
       int startIndex = ar.length / 2 - 1;
       for (int i = startIndex; i >= 0; i--)
-         reheap(ar, ar.length - 1, i);
+         reheap(ar, i, ar.length - 1);
+
+      int temp = swapCount;
+      swapCount = 0;
+      return temp;
    }
 
    // Private methods
@@ -187,17 +192,18 @@ public final class MaxHeap<T extends Comparable<? super T>>
          int largerChildIndex = leftChildIndex;
          int rightChildIndex = leftChildIndex + 1;
 
-         if ( (rightChildIndex <= lastIndex) &&
+         if ( (rightChildIndex <= lastIndex) && heap[rightChildIndex] != null &&
                heap[rightChildIndex].compareTo(heap[largerChildIndex]) > 0)
          {
             largerChildIndex = rightChildIndex;
          } // end if
 
-         if (orphan.compareTo(heap[largerChildIndex]) < 0)
+         if (orphan != null && orphan.compareTo(heap[largerChildIndex]) < 0)
          {
             heap[rootIndex] = heap[largerChildIndex];
             rootIndex = largerChildIndex;
             leftChildIndex = 2 * rootIndex + 1;
+            swapCount++;
          }
          else
             done = true;
