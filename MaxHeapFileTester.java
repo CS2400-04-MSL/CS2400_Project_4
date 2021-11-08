@@ -11,52 +11,85 @@ public class MaxHeapFileTester {
 	{
 		File randomData = new File("data_random.txt");
 		Scanner reader1 = new Scanner(randomData);
-		Comparable[] random = new String[100];
-		
+		Comparable[] arraySeq = new String[100];
+		Comparable[] arrayOpt = new String[100];
+
 		int i = 0;
 		while (reader1.hasNextLine())
 		{
-			random[i] = reader1.nextLine();
+			arraySeq[i] = reader1.nextLine();
 			++i;
 		}
 
+		arrayOpt = Arrays.copyOf(arraySeq,arraySeq.length);
+
+
+		int swapsSequential = MaxHeap.buildMaxHeap_sequential(arraySeq);
 
 		//optimal method
-		System.out.println(Arrays.toString(random) + "\n");
-		int swaps = MaxHeap.buildMaxHeap_optimal(random);
-		System.out.println("\n" + Arrays.toString(random));
-		
+		System.out.println(Arrays.toString(arrayOpt) + "\n");
+		int swapsOptimal = MaxHeap.buildMaxHeap_optimal(arrayOpt);
+		System.out.println("\n" + Arrays.toString(arrayOpt));
 		System.out.println();
-		
-		//File sortedData = new File("data_sorted.txt");
-		//Scanner reader2 = new Scanner(sortedData);
-		Comparable[] sorted = new String[100];
+
+
+		Comparable[] sortedOptimal = new String[100];
+		Comparable[] sortedSequential = new String[100];
 		try {
 			FileWriter writer = new FileWriter("data_sorted.txt");
 
+			// sequential printing
 			//i = 0;
-			MaxHeap heap = new MaxHeap(random);
+			MaxHeap heapSeq = new MaxHeap(arraySeq);
+
+			writer.write("Sequential Method: \n\n");
 
 			for (int j = 0; j < 10; j++)
 			{
 				//sorted[i] = reader2.nextLine();
-				writer.write( (j + 1) + ": " + random[j] + "\n"); //write first 10 ints to output
-				heap.removeMax(); //perform 10 removals
+				writer.write( (j + 1) + ": " + arraySeq[j] + "\n"); //write first 10 ints to output
+				heapSeq.removeMax(); //perform 10 removals
 			}
-			writer.write("Number of swaps: " + swaps + "\n\n");
-			
-			
+			writer.write("Number of swaps: " + swapsSequential + "\n\n");
+
+
 			for (int j = 0; j < 10; j++)
 			{
 				//write to output heap after 10 removals
-				sorted[j] = heap.removeMax();
-				
-				writer.write( (j + 1) + ": " + sorted[j] + "\n");
+				sortedSequential[j] = heapSeq.removeMax();
+
+				writer.write( (j + 1) + ": " + sortedSequential[j] + "\n");
+			}
+
+			// optimal printing
+			//i = 0;
+			MaxHeap heapOpt = new MaxHeap(arrayOpt);
+
+			writer.write("\n\nOptimal Method: \n\n");
+
+			for (int j = 0; j < 10; j++)
+			{
+				//sorted[i] = reader2.nextLine();
+				writer.write( (j + 1) + ": " + arrayOpt[j] + "\n"); //write first 10 ints to output
+				heapOpt.removeMax(); //perform 10 removals
+			}
+			writer.write("Number of swaps: " + swapsOptimal + "\n\n");
+
+
+			for (int j = 0; j < 10; j++)
+			{
+				//write to output heap after 10 removals
+				sortedOptimal[j] = heapOpt.removeMax();
+
+				writer.write( (j + 1) + ": " + sortedOptimal[j] + "\n");
 			}
 			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
+
+
+
 	}
 }

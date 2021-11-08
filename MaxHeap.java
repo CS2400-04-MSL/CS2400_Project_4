@@ -6,8 +6,7 @@ import java.util.Arrays;
    @author Timothy M. Henry
    @version 5.0
 */
-public final class MaxHeap<T extends Comparable<? super T>>
-             implements MaxHeapInterface<T>
+public final class MaxHeap<T extends Comparable<? super T>> implements MaxHeapInterface<T>
 {
    private T[] heap;      // Array of heap entries; ignore heap[0]
    private int lastIndex; // Index of last entry and number of entries
@@ -65,6 +64,7 @@ public final class MaxHeap<T extends Comparable<? super T>>
          heap[newIndex] = heap[parentIndex];
          newIndex = parentIndex;
          parentIndex = newIndex / 2;
+         swapCount++;
       } // end while
 
       heap[newIndex] = newEntry;
@@ -139,6 +139,8 @@ public final class MaxHeap<T extends Comparable<? super T>>
    public static <T extends Comparable<? super T>>
    int buildMaxHeap_optimal(T ar[])
    {
+      swapCount = 0;
+
       int startIndex = ar.length / 2 - 1;
       for (int i = startIndex; i >= 0; i--)
          reheap(ar, i, ar.length - 1);
@@ -146,6 +148,23 @@ public final class MaxHeap<T extends Comparable<? super T>>
       int temp = swapCount;
       swapCount = 0;
       return temp;
+   }
+
+   /** Build Max Heap Sequentially
+    * @param inputArray
+    * @param <T>
+    */
+   public static <T extends Comparable<? super T>>
+   int buildMaxHeap_sequential(T inputArray[])
+   {
+      MaxHeap heap = new MaxHeap(inputArray.length);
+
+      swapCount = 0;
+
+      for (int i = 0; i < inputArray.length; i++)
+         heap.add(inputArray[i]);
+
+      return swapCount;
    }
 
    // Private methods
