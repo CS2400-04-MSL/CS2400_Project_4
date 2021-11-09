@@ -1,50 +1,7 @@
-Sequential Method: 
+Heap built using sequential insertions: 999, 977, 980, 905, 965, 974, 940, 868, 891, 937, ...
+Number of swaps in the heap creation: 121
+Heap after 10 removals: 899, 895, 891, 888, 868, 865, 825, 821, 82, 81, ...
 
-1: 376
-2: 580
-3: 651
-4: 332
-5: 491
-6: 481
-7: 237
-8: 620
-9: 705
-10: 409
-Number of swaps: 121
-
-1: 899
-2: 895
-3: 891
-4: 888
-5: 868
-6: 865
-7: 825
-8: 821
-9: 82
-10: 81
-
-
-Optimal Method: 
-
-1: 999
-2: 980
-3: 974
-4: 977
-5: 965
-6: 94
-7: 940
-8: 905
-9: 891
-10: 899
-Number of swaps: 75
-
-1: 899
-2: 895
-3: 891
-4: 888
-5: 868
-6: 865
-7: 825
-8: 821
-9: 82
-10: 81
+Heap built using optimal Method: 999, 980, 974, 977, 965, 94, 940, 905, 891, 899, ...
+Number of swaps in the heap creation: 75
+Heap after 10 removals: 899, 895, 891, 888, 868, 865, 825, 821, 82, 81, ...
